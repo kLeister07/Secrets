@@ -27,7 +27,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //27017 -> mongodb için default port
-mongoose.connect("mongodb://localhost/userDB", { useUnifiedTopology: true, useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost/userDB", { useUnifiedTopology: true, useNewUrlParser: true });
+  // For mongoDB atlas
+  mongoose.connect(process.env.MONGODB_ATLAS);
 // -K: Issue with database not receiving user data after google auth 
 // Place code between mongoose connection and schema, solution:
 // mongoose.set('strictQuery', false);
@@ -189,7 +191,7 @@ app.post("/register", (req, res) => {
   User.register({ username: req.body.username }, req.body.password, (err, user) => {
     if (err) {
       console.log(err);
-      res.redirect("/register");
+      res.redirect("/login");
     } else {
       passport.authenticate("local")(req, res, () => {
         res.redirect("/secrets");
@@ -203,13 +205,12 @@ app.post("/login", (req, res) => {
     username: req.body.username,
     password: req.body.password,
   });
-
   req.login(user, (err) => {
     if (err) {
       console.log(err);
     } else {
-      passport.authenticate("local")(req, res, () => {
-        res.redirect("secrets");
+      passport.authenticate("local", {failureRedirect: '/login'})(req, res, () => {
+        res.redirect("/secrets");
       });
     }
   });
