@@ -110,17 +110,7 @@ function(accessToken, refreshToken, profile, cb) {
 }
 ));
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
 
-app.get("/register", (req, res) => {
-  res.render("register");
-});
-
-app.get("/login", (req, res) => {
-  res.render("login");
-});
 
 // Google Auth route
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile"] }));
@@ -249,8 +239,21 @@ app.post("/submit",((req, res)=>{
    res.redirect("/login");
   }
 }));
-
+//////////////////////////////// end async ///////////////////////////////////////////////// 
 };
+
+app.get("/", (req, res) => {
+  res.render("home");
+});
+
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
 // Local or Heroku port
 let port = process.env.PORT || 3000
 app.listen(port, ()=>{
