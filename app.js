@@ -130,6 +130,18 @@ app.get('/auth/facebook/secrets', passport.authenticate('facebook', {
   failureRedirect: '/login'
 }));
 
+app.get("/", (req, res) => {
+  res.render("home");
+});
+
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
 // app.get("/secrets", (req, res) => {
 //   User.find({ secret: { $ne: null } }, (err, foundUsers) => {
 //     if (err) {
@@ -242,17 +254,7 @@ app.post("/submit",((req, res)=>{
 //////////////////////////////// end async ///////////////////////////////////////////////// 
 // };
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
 
-app.get("/register", (req, res) => {
-  res.render("register");
-});
-
-app.get("/login", (req, res) => {
-  res.render("login");
-});
 
 // Local or Heroku port
 let port = process.env.PORT || 3000
