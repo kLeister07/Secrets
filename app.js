@@ -88,7 +88,7 @@ passport.use(
     },
     (accessToken, refreshToken, profile, cb) => {
       // console.log(profile);
-      User.findOrCreate({ googleId: profile.id }, (err, user) => {
+      User.findOrCreate({ googleId: profile.id, username:profile.name.givenName}, (err, user) => {
         return cb(err, user);
       });
     }
