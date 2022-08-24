@@ -29,7 +29,9 @@ app.use(passport.session());
 //27017 -> mongodb için default port
 // mongoose.connect("mongodb://localhost/userDB", { useUnifiedTopology: true, useNewUrlParser: true });
   // For mongoDB atlas
-  mongoose.connect(process.env.MONGODB_ATLAS);
+  main().catch(err => console.log(err));
+async function main() {
+  await mongoose.connect(process.env.MONGODB_ATLAS);
 // -K: Issue with database not receiving user data after google auth 
 // Place code between mongoose connection and schema, solution:
 // mongoose.set('strictQuery', false);
@@ -246,7 +248,7 @@ app.post("/submit",((req, res)=>{
   }
 }));
 
-
+};
 // Local or Heroku port
 let port = process.env.PORT || 3000
 app.listen(port, ()=>{
